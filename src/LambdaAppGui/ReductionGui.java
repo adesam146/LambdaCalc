@@ -1,44 +1,79 @@
 package LambdaAppGui;
 
-import ApplicationModel.LambdaParser;
+import ApplicationModel.LambdaAppEngine;
 import LambdaTerm.LambdaAbstraction;
 import LambdaTerm.Variable;
+import Util.StringResource;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by User on 19/12/2016.
  */
 public class ReductionGui implements LambdaView {
 
-    public static final String TITLE = "Lambda Application";
-    public static final int HEIGHT = 300;
-    public static final int WIDTH = 350;
-    private final LambdaParser lambdaParser;
+    private static final int HEIGHT = 300;
+    private static final int WIDTH = 350;
+    private final LambdaAppEngine lambdaAppEngine;
 
     public void display() {
-        JFrame frame = new JFrame(TITLE);
+        JFrame frame = new JFrame(StringResource.APP_TITLE);
 
         frame.setSize(WIDTH, HEIGHT);
 
         JPanel panel = new JPanel();
+        addButtons(panel, frame);
 
-        JButton variableButton = new JButton("x");
-        variableButton.addActionListener(e -> lambdaParser.parse(new Variable()));
-        panel.add(variableButton);
+        JPanel textPanel = new JPanel();
+        JTextField inputExpr = new JTextField("Input Expression goes here",
+                20);
+        textPanel.add(inputExpr);
 
-        JButton lambdaAbstrButton = new JButton("\\");
-        lambdaAbstrButton.addActionListener(e -> lambdaParser.parse(new LambdaAbstraction()));
-        panel.add(lambdaAbstrButton);
-        
+        panel.add(textPanel);
         frame.getContentPane().add(panel);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public ReductionGui(LambdaParser lambdaParser) {
-        this.lambdaParser = lambdaParser;
+    private void addButtons(JPanel panel, JFrame frame) {
+        JButton variableButton = new JButton(StringResource.VARIABLE);
+        variableButton.addActionListener(e -> {
+            String variable = getInputVariable("Please enter variable " +
+                    "name", frame);
+            if(variable.length() > 0){
+                lambdaAppEngine.addInput(new Variable(variable));
+            }
+        });
+        panel.add(variableButton);
+
+        JButton lambdaAbstrButton = new JButton(StringResource.LAMBDA);
+        lambdaAbstrButton.addActionListener(e -> {
+            String variable = getInputVariable("Please enter variable name " +
+                    "for the lambda abstraction.", frame);
+            if(variable.length() > 0) {
+                lambdaAppEngine.addInput(new LambdaAbstraction(variable));
+            }
+        });
+        panel.add(lambdaAbstrButton);
+
+        JButton backSpace = new JButton(StringResource.BACKSPACE);
+        backSpace.addActionListener(e -> lambdaAppEngine.undoInput());
+        panel.add(backSpace);
+    }
+
+    private String getInputVariable(String message, JFrame frame) {
+        String title = "Variable Input";
+        String result;
+        do{
+            result = JOptionPane.showInputDialog(frame, message, title,
+                    JOptionPane.PLAIN_MESSAGE);
+            //In case no input or an error occurs
+        } while(result == null);
+
+        return result;
+    }
+
+    public ReductionGui(LambdaAppEngine lambdaAppEngine) {
+        this.lambdaAppEngine = lambdaAppEngine;
     }
 }
