@@ -14,11 +14,6 @@ public class LambdaApplication implements LambdaTerm {
     }
 
     @Override
-    public LambdaTerm compose(LambdaTerm lambdaTerm) {
-        return null;
-    }
-
-    @Override
     public String toString() {
         return "(" + leftTerm + " " + rightTerm + ")";
     }

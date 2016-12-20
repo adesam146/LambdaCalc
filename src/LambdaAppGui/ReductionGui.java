@@ -1,15 +1,12 @@
 package LambdaAppGui;
 
+import ApplicationModel.AbstractionToken;
 import ApplicationModel.LambdaAppEngine;
-import LambdaTerm.LambdaAbstraction;
-import LambdaTerm.Variable;
+import ApplicationModel.VariableToken;
 import Util.StringResource;
 
 import javax.swing.*;
 
-/**
- * Created by User on 19/12/2016.
- */
 public class ReductionGui implements LambdaView {
 
     private static final int HEIGHT = 300;
@@ -41,7 +38,7 @@ public class ReductionGui implements LambdaView {
             String variable = getInputVariable("Please enter variable " +
                     "name", frame);
             if(variable.length() > 0){
-                lambdaAppEngine.addInput(new Variable(variable));
+                lambdaAppEngine.addInput(new VariableToken(variable));
             }
         });
         panel.add(variableButton);
@@ -51,7 +48,7 @@ public class ReductionGui implements LambdaView {
             String variable = getInputVariable("Please enter variable name " +
                     "for the lambda abstraction.", frame);
             if(variable.length() > 0) {
-                lambdaAppEngine.addInput(new LambdaAbstraction(variable));
+                lambdaAppEngine.addInput(new AbstractionToken(variable));
             }
         });
         panel.add(lambdaAbstrButton);
@@ -62,7 +59,7 @@ public class ReductionGui implements LambdaView {
     }
 
     private String getInputVariable(String message, JFrame frame) {
-        String title = "Variable Input";
+        String title = "LambdaVariable Input";
         String result;
         do{
             result = JOptionPane.showInputDialog(frame, message, title,

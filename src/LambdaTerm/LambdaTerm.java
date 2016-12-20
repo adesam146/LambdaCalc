@@ -5,5 +5,4 @@ package LambdaTerm;
  */
 public interface LambdaTerm {
 
-    LambdaTerm compose(LambdaTerm lambdaTerm);
 }

@@ -13,37 +13,51 @@ import static org.junit.Assert.assertThat;
 public class SimpleLambdaParserTest {
 
     private final SimpleLambdaParser lambdaParser = new SimpleLambdaParser();
+    public static final String X_STR = "x";
+    public static final String Y_STR = "y";
 
     @Test
     public void canParseOneVariableTerm() {
-        Variable inputVariableTerm = new Variable("x");
-        lambdaParser.add(inputVariableTerm);
+        lambdaParser.add(new VariableToken(X_STR));
         LambdaTerm outputLambdaTerm = lambdaParser.parse();
 
-        assertThat(inputVariableTerm.toString(), is(outputLambdaTerm.toString
+        LambdaVariable expectedTerm = new LambdaVariable(X_STR);
+        assertThat(expectedTerm.toString(), is(outputLambdaTerm.toString
                 ()));
     }
 
-    //Should actually be that it doesn't parse it.
-//    @Test
-//    public void canParseOneAbstractionTerm() {
-//        LambdaTerm inputAbstractionTerm = new LambdaAbstraction("x");
-//        lambdaParser.add(inputAbstractionTerm);
-//        LambdaTerm outputLambdaTerm = lambdaParser.parse();
-//
-//        assertThat(inputAbstractionTerm.toString(), is(outputLambdaTerm
-//                .toString()));
-//    }
+    @Test
+    public void parsesAbstractionTermWithReturnTermProvided() {
+        AbstractionToken abstractionToken = new AbstractionToken
+                (X_STR);
+        VariableToken variableTerm = new VariableToken(Y_STR);
+
+        lambdaParser.add(abstractionToken);
+        lambdaParser.add(variableTerm);
+        LambdaTerm outputLambdaTerm = lambdaParser.parse();
+
+        LambdaTerm expectedTerm = new LambdaAbstraction(X_STR, new
+                LambdaVariable(Y_STR));
+
+        assertEquals(expectedTerm, outputLambdaTerm);
+    }
+
+    @Test
+    public void doesNotParseAbstractionTermWithNoReturnTerm() {
+
+    }
 
     @Test
     public void canParseOneApplicationTerm() {
-        Variable x = new Variable("x");
-        Variable y = new Variable("y");
 
-        LambdaTerm expectedResult = new LambdaApplication(x, y);
+        VariableToken xToken = new VariableToken(X_STR);
+        VariableToken yToken = new VariableToken(Y_STR);
 
-        lambdaParser.add(x);
-        lambdaParser.add(y);
+        LambdaTerm expectedResult = new LambdaApplication(new LambdaVariable
+                (X_STR), new LambdaVariable(Y_STR));
+
+        lambdaParser.add(xToken);
+        lambdaParser.add(yToken);
         LambdaTerm outputLambdaTerm = lambdaParser.parse();
 
         assertThat(outputLambdaTerm.toString(), is(expectedResult

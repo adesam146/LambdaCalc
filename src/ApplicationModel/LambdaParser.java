@@ -3,7 +3,7 @@ package ApplicationModel;
 import LambdaTerm.LambdaTerm;
 
 public interface LambdaParser {
-    void add(LambdaTerm lambdaTerm);
+    void add(LambdaToken lambdaToken);
     void removeLastInput();
     LambdaTerm parse();
 }

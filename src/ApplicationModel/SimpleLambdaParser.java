@@ -1,20 +1,17 @@
 package ApplicationModel;
 
-import LambdaTerm.LambdaTerm;
+import LambdaTerm.*;
 
 import java.util.Deque;
 import java.util.LinkedList;
 
-/**
- * Created by User on 19/12/2016.
- */
 public class SimpleLambdaParser implements LambdaParser {
 
-    Deque<LambdaTerm> lambdaTerms = new LinkedList<>();
+    Deque<LambdaToken> lambdaTokens = new LinkedList<>();
 
     @Override
-    public void add(LambdaTerm lambdaTerm) {
-        lambdaTerms.add(lambdaTerm);
+    public void add(LambdaToken lambdaToken) {
+        lambdaTokens.add(lambdaToken);
     }
 
     @Override
@@ -22,19 +19,25 @@ public class SimpleLambdaParser implements LambdaParser {
 
     }
 
-    //as lambdaTerms is being used up this means parse() can't be called
+    //as lambdaTokens is being used up this means parse() can't be called
     // consecutively
     @Override
     public LambdaTerm parse() {
-        assert(!lambdaTerms.isEmpty()) : "No lambda terms to parse";
+        assert(!lambdaTokens.isEmpty()) : "No lambda terms to parse";
 
-        return combineTerms(lambdaTerms);
+        return combineTerms(lambdaTokens);
     }
 
-    private LambdaTerm combineTerms(Deque<? extends LambdaTerm> lambdaTerms) {
-        LambdaTerm result = lambdaTerms.pollFirst();
-        if(!lambdaTerms.isEmpty()) {
-            result = result.compose(combineTerms(lambdaTerms));
+    private LambdaTerm combineTerms(Deque<? extends LambdaToken> lambdaTokens) {
+        LambdaToken firstToken = lambdaTokens.pollFirst();
+        LambdaTerm result;
+        if(!lambdaTokens.isEmpty()) {
+            //this is the case where we either need to for an application
+            // term or an abstraction term
+            result = firstToken.compose(combineTerms(lambdaTokens));
+        } else {
+            //this is when we have a lone variable
+            result = new LambdaVariable(firstToken.getText());
         }
 
         return result;
