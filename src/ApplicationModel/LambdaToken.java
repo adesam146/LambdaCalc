@@ -1,6 +1,6 @@
 package ApplicationModel;
 
-import LambdaTerm.LambdaTerm;
+import LambdaTerms.LambdaTerm;
 
 /**
  * Created by User on 20/12/2016.

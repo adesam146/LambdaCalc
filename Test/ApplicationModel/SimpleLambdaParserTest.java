@@ -1,6 +1,6 @@
 package ApplicationModel;
 
-import LambdaTerm.*;
+import LambdaTerms.*;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -22,8 +22,7 @@ public class SimpleLambdaParserTest {
         LambdaTerm outputLambdaTerm = lambdaParser.parse();
 
         LambdaVariable expectedTerm = new LambdaVariable(X_STR);
-        assertThat(expectedTerm.toString(), is(outputLambdaTerm.toString
-                ()));
+        assertEquals(expectedTerm, outputLambdaTerm);
     }
 
     @Test
@@ -49,7 +48,6 @@ public class SimpleLambdaParserTest {
 
     @Test
     public void canParseOneApplicationTerm() {
-
         VariableToken xToken = new VariableToken(X_STR);
         VariableToken yToken = new VariableToken(Y_STR);
 

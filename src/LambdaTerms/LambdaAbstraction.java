@@ -1,8 +1,5 @@
-package LambdaTerm;
+package LambdaTerms;
 
-/**
- * Created by User on 19/12/2016.
- */
 public class LambdaAbstraction implements LambdaTerm {
 
     private final String variable;
@@ -14,8 +11,16 @@ public class LambdaAbstraction implements LambdaTerm {
     }
 
     @Override
-    public String toString() {
-        return super.toString();
+    public <T> T accept(LambdaTermVisitor<T> visitor) {
+        return visitor.visitLambdaAbstraction(this);
+    }
+
+    public String getVariable() {
+        return variable;
+    }
+
+    public LambdaTerm getReturnTerm() {
+        return returnTerm;
     }
 
     @Override
@@ -25,19 +30,19 @@ public class LambdaAbstraction implements LambdaTerm {
 
         LambdaAbstraction that = (LambdaAbstraction) o;
 
-        if (variable != null && !variable.equals(that.variable) ||
-                variable == null && that.variable != null){
-            return false;
-        }
-        return returnTerm != null && returnTerm.equals(that.returnTerm)
-                || returnTerm == null && that.returnTerm == null;
-
+        if (!variable.equals(that.variable)) return false;
+        return returnTerm.equals(that.returnTerm);
     }
 
     @Override
     public int hashCode() {
-        int result = variable != null ? variable.hashCode() : 0;
-        result = 31 * result + (returnTerm != null ? returnTerm.hashCode() : 0);
+        int result = variable.hashCode();
+        result = 31 * result + returnTerm.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

@@ -1,6 +1,6 @@
 package ApplicationModel;
 
-import LambdaTerm.LambdaTerm;
+import LambdaTerms.LambdaTerm;
 
 public interface LambdaParser {
     void add(LambdaToken lambdaToken);

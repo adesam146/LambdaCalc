@@ -1,6 +1,6 @@
 package ApplicationModel;
 
-import LambdaTerm.*;
+import LambdaTerms.*;
 
 import java.util.Deque;
 import java.util.LinkedList;

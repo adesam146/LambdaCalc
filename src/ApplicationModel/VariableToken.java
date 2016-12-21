@@ -1,6 +1,6 @@
 package ApplicationModel;
 
-import LambdaTerm.*;
+import LambdaTerms.*;
 
 public class VariableToken implements LambdaToken{
 

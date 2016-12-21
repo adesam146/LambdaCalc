@@ -1,4 +1,4 @@
-package LambdaTerm;
+package LambdaTerms;
 
 public class LambdaVariable implements LambdaTerm {
 
@@ -14,18 +14,23 @@ public class LambdaVariable implements LambdaTerm {
     }
 
     @Override
+    public <T> T accept(LambdaTermVisitor<T> visitor) {
+        return visitor.visitLambdaVariable(this);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         LambdaVariable that = (LambdaVariable) o;
 
-        return variable != null ? variable.equals(that.variable) :
-                that.variable == null;
+        return variable.equals(that.variable);
+
     }
 
     @Override
     public int hashCode() {
-        return variable != null ? variable.hashCode() : 0;
+        return variable.hashCode();
     }
 }

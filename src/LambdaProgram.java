@@ -1,8 +1,6 @@
 import ApplicationModel.LambdaAppEngine;
-import ApplicationModel.LambdaParser;
 import LambdaAppGui.LambdaView;
 import LambdaAppGui.ReductionGui;
-import LambdaTerm.LambdaTerm;
 
 public class LambdaProgram {
 
