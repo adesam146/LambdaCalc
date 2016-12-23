@@ -1,4 +1,4 @@
-package ApplicationModel;
+package LambdaAppUI;
 
 import LambdaTerms.*;
 

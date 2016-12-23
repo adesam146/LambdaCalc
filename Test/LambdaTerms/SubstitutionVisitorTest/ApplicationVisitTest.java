@@ -1,9 +1,6 @@
 package LambdaTerms.SubstitutionVisitorTest;
 
-import LambdaTerms.LambdaApplication;
-import LambdaTerms.LambdaTerm;
-import LambdaTerms.LambdaVariable;
-import LambdaTerms.SubstitutionVisitor;
+import LambdaTerms.*;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -24,6 +21,7 @@ public class ApplicationVisitTest {
     @Test
     public void canSubInVariableTermIntoSimpleApplication() {
         varToBeReplaced = "x";
+        //(x y)
         applicationTerm = new LambdaApplication(new LambdaVariable
                 (varToBeReplaced), new LambdaVariable("y"));
 
@@ -33,7 +31,51 @@ public class ApplicationVisitTest {
 
         result = substitutionVisitor.visit(applicationTerm);
 
-        expected = new LambdaApplication(new LambdaVariable("z"), new
+        //(z y)
+        expected = new LambdaApplication(substitute, new
+                LambdaVariable("y"));
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void canSubInAbstractionTermIntoSimpleApplication() {
+        varToBeReplaced = "x";
+        //(x y)
+        applicationTerm = new LambdaApplication(new LambdaVariable
+                (varToBeReplaced), new LambdaVariable("y"));
+
+        //(\x. xx)
+        substitute = new LambdaAbstraction("x", new LambdaApplication("x",
+                "x"));
+        substitutionVisitor = new SubstitutionVisitor(varToBeReplaced,
+                substitute);
+
+        result = substitutionVisitor.visit(applicationTerm);
+
+        //((\x. xx) y)
+        expected = new LambdaApplication(substitute, new
+                LambdaVariable("y"));
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void canSubInApplicationTermIntoSimpleApplication() {
+        varToBeReplaced = "x";
+        //(x y)
+        applicationTerm = new LambdaApplication(new LambdaVariable
+                (varToBeReplaced), new LambdaVariable("y"));
+
+        //(x y)
+        substitute = new LambdaApplication("x", "x");
+        substitutionVisitor = new SubstitutionVisitor(varToBeReplaced,
+                substitute);
+
+        result = substitutionVisitor.visit(applicationTerm);
+
+        //((x x) y)
+        expected = new LambdaApplication(substitute, new
                 LambdaVariable("y"));
 
         assertEquals(expected, result);
@@ -42,6 +84,7 @@ public class ApplicationVisitTest {
     @Test
     public void canSubInVariableTermIntoBothPartsOfTerm() {
         varToBeReplaced = "x";
+        //(x x)
         applicationTerm = new LambdaApplication(new LambdaVariable
                 (varToBeReplaced), new LambdaVariable(varToBeReplaced));
 
@@ -53,8 +96,8 @@ public class ApplicationVisitTest {
 
         result = substitutionVisitor.visit(applicationTerm);
 
-        expected = new LambdaApplication(new LambdaVariable(replacementVar), new
-                LambdaVariable(replacementVar));
+        //(z z)
+        expected = new LambdaApplication(substitute, substitute);
 
         assertEquals(expected, result);
     }

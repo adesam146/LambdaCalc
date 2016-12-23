@@ -1,4 +1,4 @@
-package LambdaAppGui;
+package LambdaAppUI;
 
 /**
  * Created by User on 19/12/2016.

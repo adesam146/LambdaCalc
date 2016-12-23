@@ -1,13 +1,16 @@
 import ApplicationModel.LambdaAppEngine;
-import LambdaAppGui.LambdaView;
-import LambdaAppGui.ReductionGui;
+import LambdaAppUI.SimpleLambdaParser;
+import LambdaAppUI.LambdaView;
+import LambdaAppUI.SimpleGui;
 
 public class LambdaProgram {
 
     public static void main(String[] args) {
         LambdaAppEngine lambdaAppEngine = new LambdaAppEngine();
 
-        LambdaView lambdaView = new ReductionGui(lambdaAppEngine);
+        LambdaView lambdaView = new SimpleGui(lambdaAppEngine, new
+                SimpleLambdaParser());
+
         lambdaView.display();
     }
 }

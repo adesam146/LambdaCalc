@@ -10,6 +10,13 @@ public class LambdaApplication implements LambdaTerm {
         this.rightTerm = rightTerm;
     }
 
+    //You would probably need to make applicationTerms of two variable a lot,
+    // the need for this was noticed while writing the test cases
+    public LambdaApplication(String leftVar, String rightVar) {
+        this.leftTerm = new LambdaVariable(leftVar);
+        this.rightTerm = new LambdaVariable(rightVar);
+    }
+
     @Override
     public String toString() {
         return "(" + leftTerm + " " + rightTerm + ")";

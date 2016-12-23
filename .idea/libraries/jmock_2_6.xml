@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="jmock-2.6">
+    <CLASSES>
+      <root url="file://C:/Imperial/Compsci/jmock-2.6.0" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://C:/Imperial/Compsci/jmock-2.6.0" />
+    </SOURCES>
+    <jarDirectory url="file://C:/Imperial/Compsci/jmock-2.6.0" recursive="false" />
+    <jarDirectory url="file://C:/Imperial/Compsci/jmock-2.6.0" recursive="false" type="SOURCES" />
+  </library>
+</component>

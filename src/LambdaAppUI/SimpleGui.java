@@ -1,17 +1,16 @@
-package LambdaAppGui;
+package LambdaAppUI;
 
-import ApplicationModel.AbstractionToken;
 import ApplicationModel.LambdaAppEngine;
-import ApplicationModel.VariableToken;
 import Util.StringResource;
 
 import javax.swing.*;
 
-public class ReductionGui implements LambdaView {
+public class SimpleGui implements LambdaView {
 
     private static final int HEIGHT = 300;
     private static final int WIDTH = 350;
     private final LambdaAppEngine lambdaAppEngine;
+    private final LambdaParser lambdaParser;
 
     public void display() {
         JFrame frame = new JFrame(StringResource.APP_TITLE);
@@ -38,7 +37,7 @@ public class ReductionGui implements LambdaView {
             String variable = getInputVariable("Please enter variable " +
                     "name", frame);
             if(variable.length() > 0){
-                lambdaAppEngine.addInput(new VariableToken(variable));
+                lambdaParser.add(new VariableToken(variable));
             }
         });
         panel.add(variableButton);
@@ -48,13 +47,13 @@ public class ReductionGui implements LambdaView {
             String variable = getInputVariable("Please enter variable name " +
                     "for the lambda abstraction.", frame);
             if(variable.length() > 0) {
-                lambdaAppEngine.addInput(new AbstractionToken(variable));
+                lambdaParser.add(new AbstractionToken(variable));
             }
         });
         panel.add(lambdaAbstrButton);
 
         JButton backSpace = new JButton(StringResource.BACKSPACE);
-        backSpace.addActionListener(e -> lambdaAppEngine.undoInput());
+        backSpace.addActionListener(e -> lambdaParser.removeLastInput());
         panel.add(backSpace);
     }
 
@@ -70,7 +69,9 @@ public class ReductionGui implements LambdaView {
         return result;
     }
 
-    public ReductionGui(LambdaAppEngine lambdaAppEngine) {
+    public SimpleGui(LambdaAppEngine lambdaAppEngine, LambdaParser
+            lambdaParser) {
         this.lambdaAppEngine = lambdaAppEngine;
+        this.lambdaParser = lambdaParser;
     }
 }

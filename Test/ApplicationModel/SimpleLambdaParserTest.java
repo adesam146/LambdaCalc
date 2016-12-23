@@ -1,5 +1,8 @@
 package ApplicationModel;
 
+import LambdaAppUI.AbstractionToken;
+import LambdaAppUI.SimpleLambdaParser;
+import LambdaAppUI.VariableToken;
 import LambdaTerms.*;
 import org.junit.Test;
 
