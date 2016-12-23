@@ -1,5 +1,7 @@
 package LambdaTerms;
 
+import static Util.StringResource.LAMBDA;
+
 public class LambdaAbstraction implements LambdaTerm {
 
     private final String variable;
@@ -43,6 +45,6 @@ public class LambdaAbstraction implements LambdaTerm {
 
     @Override
     public String toString() {
-        return super.toString();
+        return LAMBDA + variable + "." + returnTerm;
     }
 }

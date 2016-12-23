@@ -19,7 +19,7 @@ public class LambdaApplication implements LambdaTerm {
 
     @Override
     public String toString() {
-        return "(" + leftTerm + " " + rightTerm + ")";
+        return "(" + leftTerm + rightTerm + ")";
     }
 
     @Override

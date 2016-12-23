@@ -13,6 +13,10 @@ public class LambdaVariable implements LambdaTerm {
         return variable;
     }
 
+    public String getVariable() {
+        return variable;
+    }
+
     @Override
     public <T> T accept(LambdaTermVisitor<T> visitor) {
         return visitor.visitLambdaVariable(this);
@@ -26,7 +30,6 @@ public class LambdaVariable implements LambdaTerm {
         LambdaVariable that = (LambdaVariable) o;
 
         return variable.equals(that.variable);
-
     }
 
     @Override

@@ -5,17 +5,17 @@ package LambdaTerms;
  */
 public class SubstitutionVisitor implements LambdaTermVisitor<LambdaTerm> {
 
-    private LambdaVariable variableToBeReplaced;
+    private LambdaVariable varTermToBeReplaced;
     private LambdaTerm substitute;
 
-    public SubstitutionVisitor(LambdaVariable variableToBeReplaced,
+    public SubstitutionVisitor(LambdaVariable varTermToBeReplaced,
                                LambdaTerm substitute) {
-        this.variableToBeReplaced = variableToBeReplaced;
+        this.varTermToBeReplaced = varTermToBeReplaced;
         this.substitute = substitute;
     }
 
     public SubstitutionVisitor(String varToBeReplaced, LambdaTerm substitute) {
-        this.variableToBeReplaced = new LambdaVariable(varToBeReplaced);
+        this.varTermToBeReplaced = new LambdaVariable(varToBeReplaced);
         this.substitute = substitute;
     }
 
@@ -26,7 +26,7 @@ public class SubstitutionVisitor implements LambdaTermVisitor<LambdaTerm> {
 
     @Override
     public LambdaTerm visitLambdaVariable(LambdaVariable lambdaVariable) {
-        if(lambdaVariable.equals(variableToBeReplaced)) {
+        if(lambdaVariable.equals(varTermToBeReplaced)) {
             return substitute;
         } else {
             return lambdaVariable;
@@ -42,6 +42,12 @@ public class SubstitutionVisitor implements LambdaTermVisitor<LambdaTerm> {
 
     @Override
     public LambdaTerm visitLambdaAbstraction(LambdaAbstraction lambdaAbstraction) {
+        LambdaVariable bindingVarTerm = new LambdaVariable(lambdaAbstraction
+                .getVariable());
+        if(bindingVarTerm.equals(varTermToBeReplaced)) {
+            return lambdaAbstraction;
+        }
+
         return null;
     }
 }
