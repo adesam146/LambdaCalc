@@ -11,7 +11,15 @@ public class SimpleGui implements LambdaView {
     private static final int WIDTH = 350;
     private final LambdaAppEngine lambdaAppEngine;
     private final LambdaParser lambdaParser;
+    private final JTextField inputExpr = new JTextField("Input Expression goes here",
+            20);
 
+    public SimpleGui(LambdaAppEngine lambdaAppEngine) {
+        this.lambdaAppEngine = lambdaAppEngine;
+        this.lambdaParser = new SimpleLambdaParser(this);
+    }
+
+    //view code
     public void display() {
         JFrame frame = new JFrame(StringResource.APP_TITLE);
 
@@ -21,8 +29,6 @@ public class SimpleGui implements LambdaView {
         addButtons(panel, frame);
 
         JPanel textPanel = new JPanel();
-        JTextField inputExpr = new JTextField("Input Expression goes here",
-                20);
         textPanel.add(inputExpr);
 
         panel.add(textPanel);
@@ -30,6 +36,21 @@ public class SimpleGui implements LambdaView {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
+    @Override
+    public void updateInputDisplay() {
+        StringBuilder sb = new StringBuilder();
+        lambdaParser.getTokens().forEach(token -> sb.append(token.toString()));
+
+        inputExpr.setText(sb.toString());
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    //Controller code
 
     private void addButtons(JPanel panel, JFrame frame) {
         JButton variableButton = new JButton(StringResource.VARIABLE);
@@ -67,11 +88,5 @@ public class SimpleGui implements LambdaView {
         } while(result == null);
 
         return result;
-    }
-
-    public SimpleGui(LambdaAppEngine lambdaAppEngine, LambdaParser
-            lambdaParser) {
-        this.lambdaAppEngine = lambdaAppEngine;
-        this.lambdaParser = lambdaParser;
     }
 }

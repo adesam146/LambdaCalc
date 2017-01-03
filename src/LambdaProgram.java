@@ -9,8 +9,9 @@ public class LambdaProgram {
     public static void main(String[] args) {
         LambdaAppEngine lambdaAppEngine = new BetaReductionEngine();
 
-        LambdaView lambdaView = new SimpleGui(lambdaAppEngine, new
-                SimpleLambdaParser());
+        LambdaView lambdaView = new SimpleGui(lambdaAppEngine);
+
+        lambdaAppEngine.addObservers(lambdaView);
 
         lambdaView.display();
     }
