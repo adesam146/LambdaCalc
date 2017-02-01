@@ -5,6 +5,10 @@ package LambdaTerms;
  */
 public class SubstitutionVisitor implements LambdaTermVisitor<LambdaTerm> {
 
+    /*TODO: to be moved into LambdaTerms themselves as it seems like too much
+     of an overhead to have to make an extra object just to do a common
+     operation like substitution on LambdaTerms*/
+
     private LambdaVariable varTermToBeReplaced;
     private LambdaTerm substitute;
 
